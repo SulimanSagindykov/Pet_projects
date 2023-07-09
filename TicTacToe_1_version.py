@@ -1,3 +1,6 @@
+# p.s. that's the first ever project I did. (did it entirely on my own without cheating = looking at others' code, etc.)
+# spent a significant amount of time
+
 # Board
 one = '     |     |     '
 two_2_8_14 = '     |     |     '
