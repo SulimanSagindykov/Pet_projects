@@ -38,6 +38,7 @@ print(a)
 b = [1, 7, 10, 3, 2, 9]
 b.sort()
 print(b)
+# output - [1, 2, 3, 7, 9, 10]
 b.sort(reverse=True)
 print(b)
-print(b.sorted())
+# output - [10, 9, 7, 3, 2, 1]
