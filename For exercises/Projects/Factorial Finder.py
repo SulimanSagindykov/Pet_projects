@@ -15,5 +15,4 @@ while True:
     except:
         print('Please enter a positive number')
 
-
 factorial(x)
