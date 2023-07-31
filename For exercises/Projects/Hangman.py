@@ -7,30 +7,30 @@ class Word():
 
     def __init__(self):
         x = requests.get(link)
-        text = bs4.BeautifulSoup(x.text, 'lxml')
+        text = bs4.BeautifulSoup(x.text, 'lxml') # gets convenient text from the website
         self.x = x
         self.text = text
 
     def word(self):
-        self.word = self.text.select('#random_word')[0].text.upper()
+        self.word = self.text.select('#random_word')[0].text.upper() # word = text with a id=random_wird
         return self.word
     
     def definition(self):
-        return self.text.select('#random_word_definition')[0].text
+        return self.text.select('#random_word_definition')[0].text # definition of the word
     
     def word_show(self, censored_word, letter):
         self.censored_word = censored_word
         self.letter = letter
-        if self.letter in self.word:
+        if self.letter in self.word: # if letter is in the word
             pattern = self.letter
-            iteration = re.finditer(pattern, self.word)
-            for i in iteration:
-                index = i.span()[0]
-                if index != 0:
+            iteration = re.finditer(pattern, self.word) 
+            for i in iteration: # loops through all found letters in the word
+                index = i.span()[0] # index of a letter in the word
+                if index != 0: # replaces '*' with a found letter
                     self.censored_word = self.censored_word[0:index*2 + 1] + self.letter + self.censored_word[index*2+2::]
                 else:
                     self.censored_word = self.censored_word[0] + self.letter + self.censored_word[2::]
-        return self.censored_word  
+        return self.censored_word
 
 
 class Guess():
@@ -42,10 +42,10 @@ class Guess():
         self.used_letters = used_letters
         while True:
             letter = input('Guess a Letter: ').upper()
-            if letter.isalpha() != True or len(letter) > 1 == True:
+            if letter.isalpha() != True or len(letter) > 1 == True: # checks if letter was typed
                 print('Please choose a letter!')
             else:
-                if letter in used_letters:
+                if letter in used_letters: # checks if it wasn't used before
                     print('Please choose another letter!')
                 else:
                     used_letters.add(letter)
@@ -91,11 +91,11 @@ class Game_on():
                 print("Please type 'y' or 'n'!")
 
         while game_on == True:
-            used_letters = set()
-            true_letters = set()
+            used_letters = set() # set of used letters
+            true_letters = set() # set of letters in the word
             lives = 5
-            random = Word()
-            word = random.word().upper()
+            random = Word() # initiates the class 'Word'
+            word = random.word() # word in upper cases
             definition = random.definition()
             word_len = len(word)
             censored_word = ' -'*word_len
@@ -105,14 +105,14 @@ class Game_on():
             game_process = True
 
             while game_process == True:
-                guess = Guess()
-                letter = guess.guess(used_letters)
-                guess_check = guess.guess_check(letter, word)
-                lives = eval(guess.lives(guess_check, lives))
+                guess = Guess() # initiates the class 'Guess'
+                letter = guess.guess(used_letters) # guessed letter
+                guess_check = guess.guess_check(letter, word) # True if guessed letter was a letter in the word
+                lives = eval(guess.lives(guess_check, lives)) # updates the amount of lives
                 print(f'You have {lives} lives left\nUsed Letters: {used_letters}')
-                censored_word = random.word_show(censored_word, letter)
+                censored_word = random.word_show(censored_word, letter) # shows censored word with letters that were guessed correctly
                 print(f'The Word: {censored_word}\n')
-                if (true_letters.difference(used_letters) == set()) == True:
+                if (true_letters.difference(used_letters) == set()) == True: # True if set of used letters is the same as set of actual letter
                     print('Congratulations! You have found the word!')
                     break
                 elif lives == 0:
@@ -133,5 +133,5 @@ class Game_on():
 
 
 link = 'https://randomword.com/'
-game = Game_on()
+game = Game_on() # initiates the class 'Word'
 game.start()
