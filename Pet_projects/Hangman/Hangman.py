@@ -1,7 +1,9 @@
 import requests
 import bs4
 import re
-
+import gtts
+import shutil
+from playsound import playsound
 
 class Word():
 
@@ -102,6 +104,10 @@ class Game_on():
             for i in word:
                 true_letters.add(i)
             print(f"The definition of the word is: {definition}")
+            tts = gtts.gTTS(f"The definition of the word is: {definition}")
+            tts.save('hangman_definition.mp3')
+            playsound("hangman_definition.mp3")
+            shutil.move('hangman_definition.mp3', 'Pet_projects\Hangman\hangman_definition.mp3')
             game_process = True
 
             while game_process == True:
